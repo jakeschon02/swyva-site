@@ -1,5 +1,6 @@
-// This is a full rewrite of your Swyva homepage based on the new reference image.
-// It includes updated layout, typography, colors, and content structure.
+"use client";
+
+import "./globals.css";
 
 export default function Home() {
     return (
