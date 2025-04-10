@@ -3,9 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { Metadata } from 'next';
 
-// Generate static paths
+// 👇 This is REQUIRED in App Router to generate static paths
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((file) => ({
@@ -13,28 +12,14 @@ export async function generateStaticParams() {
     }));
 }
 
-// Metadata (Optional, for SEO)
-export async function generateMetadata({
-                                           params,
-                                       }: {
-    params: { slug: string };
-}): Promise<Metadata> {
-    const filePath = path.join('blog-posts', `${params.slug}.md`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
-
-    return {
-        title: data.title,
-        description: data.description || '',
+// 👇 This is the correct typing for the Page function in App Router
+type Props = {
+    params: {
+        slug: string;
     };
-}
+};
 
-// Page component
-export default async function Page({
-                                       params,
-                                   }: {
-    params: { slug: string };
-}) {
+export default async function Page({ params }: Props) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
 
