@@ -1,12 +1,11 @@
 // src/app/blog/[slug]/page.tsx
+
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { notFound } from 'next/navigation';
 
-// Static generation for dynamic routes
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((file) => ({
@@ -14,16 +13,13 @@ export async function generateStaticParams() {
     }));
 }
 
-// ✅ Do NOT type the `params` inline; let Next.js infer them
-export default async function Page(props: { params: { slug: string } }) {
-    const { slug } = props.params;
+// ✅ No inline typing, just destructure later. This avoids the TS confusion.
+export default async function Page(props: any) {
+    const slug = props.params?.slug;
+
     const filePath = path.join('blog-posts', `${slug}.md`);
-
-    if (!fs.existsSync(filePath)) {
-        notFound();
-    }
-
     const fileContents = fs.readFileSync(filePath, 'utf8');
+
     const { data, content } = matter(fileContents);
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
