@@ -4,9 +4,11 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-type Props = {
-    params: { slug: string };
-};
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
 
 // ✅ For static site generation (SSG)
 export async function generateStaticParams() {
@@ -16,8 +18,8 @@ export async function generateStaticParams() {
     }));
 }
 
-// ✅ The page component (must return a Promise and be typed correctly)
-export default async function Page({ params }: Props) {
+// ✅ The page component
+export default async function Page({ params }: PageProps) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
