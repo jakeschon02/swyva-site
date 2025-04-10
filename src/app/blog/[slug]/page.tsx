@@ -1,10 +1,12 @@
+// src/app/blog/[slug]/page.tsx
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { notFound } from 'next/navigation';
 
-// 👇 This is REQUIRED in App Router to generate static paths
+// Static generation helper
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((file) => ({
@@ -12,17 +14,15 @@ export async function generateStaticParams() {
     }));
 }
 
-// 👇 This is the correct typing for the Page function in App Router
-type Props = {
-    params: {
-        slug: string;
-    };
-};
-
-export default async function Page({ params }: Props) {
+// Page component with correct typing
+export default async function Page({ params }: { params: { slug: string } }) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
 
+    if (!fs.existsSync(filePath)) {
+        notFound();
+    }
+
+    const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
