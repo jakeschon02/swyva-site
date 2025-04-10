@@ -1,100 +1,83 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
-export default function Calculator() {
+export default function CalculatorPage() {
     const [pages, setPages] = useState(1);
     const [customDesign, setCustomDesign] = useState(false);
-    const [addons, setAddons] = useState<string[]>([]);
-
-    const addonOptions = [
-        { label: 'CMS Integration (WordPress)', value: 'cms', price: 225 },
-        { label: 'E-commerce Setup', value: 'ecommerce', price: 450 },
-        { label: 'Newsletter Setup', value: 'newsletter', price: 75 },
-        { label: 'Booking Plugin', value: 'booking', price: 150 },
-        { label: 'Multi-language Support', value: 'language', price: 150 },
-        { label: 'Hosting Setup', value: 'hosting', price: 75 },
-        { label: 'Speed Optimization', value: 'speed', price: 115 },
-    ];
-
-    const toggleAddon = (value: string) => {
-        setAddons((prev) =>
-            prev.includes(value) ? prev.filter((a) => a !== value) : [...prev, value]
-        );
-    };
+    const [cms, setCMS] = useState(false);
+    const [ecommerce, setEcommerce] = useState(false);
+    const [newsletter, setNewsletter] = useState(false);
+    const [booking, setBooking] = useState(false);
+    const [multiLanguage, setMultiLanguage] = useState(false);
+    const [hosting, setHosting] = useState(false);
+    const [optimization, setOptimization] = useState(false);
 
     const calculateTotal = () => {
-        let total = 300; // Base landing page avg (€250–400)
-        total += (pages - 1) * 75; // Each extra page avg (€50–100)
-        if (customDesign) total += 150; // Avg custom design (€100–200)
-        addons.forEach((a) => {
-            const addon = addonOptions.find((opt) => opt.value === a);
-            if (addon) total += addon.price;
-        });
+        let total = 0;
+        total += 250; // base landing page
+        total += (pages - 1) * 75;
+        if (customDesign) total += 150;
+        if (cms) total += 200;
+        if (ecommerce) total += 400;
+        if (newsletter) total += 75;
+        if (booking) total += 150;
+        if (multiLanguage) total += 150;
+        if (hosting) total += 75;
+        if (optimization) total += 120;
         return total;
     };
 
     return (
-        <main className="min-h-screen bg-white px-6 py-20">
-            <div className="max-w-3xl mx-auto">
-                <h1 className="text-4xl font-bold mb-10 text-center">Website Price Calculator</h1>
+        <main className="min-h-screen py-12 px-6 max-w-2xl mx-auto text-gray-900">
+            <h1 className="text-4xl font-bold text-center mb-8">Website Price Calculator</h1>
 
-                <div className="space-y-8">
-                    <div>
-                        <label className="block font-medium mb-2">How many pages?</label>
-                        <input
-                            type="number"
-                            min="1"
-                            value={pages}
-                            onChange={(e) => setPages(Number(e.target.value))}
-                            className="w-full border rounded px-4 py-2"
-                        />
-                    </div>
+            <div className="space-y-6">
+                <div>
+                    <label className="block font-medium mb-1">Number of pages:</label>
+                    <input
+                        type="number"
+                        min="1"
+                        value={pages}
+                        onChange={(e) => setPages(Number(e.target.value))}
+                        className="w-full px-4 py-2 border rounded"
+                    />
+                </div>
 
-                    <div className="flex items-center space-x-3">
-                        <input
-                            type="checkbox"
-                            id="customDesign"
-                            checked={customDesign}
-                            onChange={() => setCustomDesign(!customDesign)}
-                            className="w-5 h-5"
-                        />
-                        <label htmlFor="customDesign" className="font-medium">
-                            Include Custom Design
-                        </label>
-                    </div>
+                <div className="space-y-2">
+                    <Checkbox label="Custom Design" checked={customDesign} onChange={setCustomDesign} />
+                    <Checkbox label="CMS Integration (WordPress)" checked={cms} onChange={setCMS} />
+                    <Checkbox label="E-commerce Setup" checked={ecommerce} onChange={setEcommerce} />
+                    <Checkbox label="Newsletter Setup" checked={newsletter} onChange={setNewsletter} />
+                    <Checkbox label="Booking Plugin" checked={booking} onChange={setBooking} />
+                    <Checkbox label="Multi-language Support" checked={multiLanguage} onChange={setMultiLanguage} />
+                    <Checkbox label="Hosting Setup" checked={hosting} onChange={setHosting} />
+                    <Checkbox label="Speed Optimization" checked={optimization} onChange={setOptimization} />
+                </div>
 
-                    <div>
-                        <label className="block font-medium mb-2">Add-ons:</label>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {addonOptions.map((addon) => (
-                                <label key={addon.value} className="flex items-center space-x-2">
-                                    <input
-                                        type="checkbox"
-                                        checked={addons.includes(addon.value)}
-                                        onChange={() => toggleAddon(addon.value)}
-                                    />
-                                    <span>{addon.label} (€{addon.price})</span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="text-center mt-10">
-                        <p className="text-xl font-semibold">
-                            💰 Estimated Total: <span className="text-blue-600">€{calculateTotal()}</span>
-                        </p>
-                    </div>
+                <div className="text-xl font-semibold mt-4">
+                    💰 Estimated Total: <span className="text-blue-600">€{calculateTotal()}</span>
                 </div>
             </div>
-            <div className="text-center mt-8">
-                <a
-                    href="/"
-                    className="inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300 transition"
-                >
-                    ← Back to Home
-                </a>
+
+            {/* Back to Home Link (Fixed!) */}
+            <div className="text-center mt-10">
+                <Link href="/">
+          <span className="inline-block bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300 transition">
+            ← Back to Home
+          </span>
+                </Link>
             </div>
         </main>
+    );
+}
+
+function Checkbox({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
+    return (
+        <label className="flex items-center space-x-3">
+            <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+            <span>{label}</span>
+        </label>
     );
 }
