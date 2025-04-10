@@ -4,23 +4,15 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { notFound } from 'next/navigation';
-import React from 'react';
-
-type Props = {
-    params: {
-        slug: string;
-    };
-};
 
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
-    return files.map((file) => ({
-        slug: file.replace(/\.md$/, ''),
+    return files.map((filename) => ({
+        slug: filename.replace(/\.md$/, ''),
     }));
 }
 
-// ✅ Page function with simplified type
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: any) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
 
     if (!fs.existsSync(filePath)) {
