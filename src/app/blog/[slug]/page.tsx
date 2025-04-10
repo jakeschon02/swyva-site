@@ -5,6 +5,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
@@ -13,14 +14,24 @@ export async function generateStaticParams() {
     }));
 }
 
-// ✅ No inline typing, just destructure later. This avoids the TS confusion.
-export default async function Page(props: any) {
-    const slug = props.params?.slug;
+interface Params {
+    params: {
+        slug: string;
+    };
+}
 
+// ✅ Clean, valid, no any
+export default async function Page({ params }: Params) {
+    const slug = params.slug;
     const filePath = path.join('blog-posts', `${slug}.md`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
 
+    if (!fs.existsSync(filePath)) {
+        notFound();
+    }
+
+    const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
+
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
 
