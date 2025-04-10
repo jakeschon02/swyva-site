@@ -4,15 +4,14 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
-// Define the type correctly for params
-type BlogPostPageProps = {
+interface PageProps {
     params: {
         slug: string;
     };
-};
+}
 
-// Generates static paths for each blog post
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((file) => ({
@@ -20,16 +19,29 @@ export async function generateStaticParams() {
     }));
 }
 
-// Renders the blog post page
-export default async function BlogPost({ params }: BlogPostPageProps) {
+// Optional SEO
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const filePath = path.join('blog-posts', `${params.slug}.md`);
+    if (!fs.existsSync(filePath)) return {};
+
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data } = matter(fileContents);
+
+    return {
+        title: data.title || 'Blog Post',
+        description: data.description || '',
+    };
+}
+
+export default async function BlogPost({ params }: PageProps) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
 
-    // Handle 404 if the post does not exist
-    if (!fs.existsSync(filePath)) return notFound();
+    if (!fs.existsSync(filePath)) {
+        return notFound();
+    }
 
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
-
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
 
