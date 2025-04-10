@@ -6,7 +6,7 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import { notFound } from 'next/navigation';
 
-// Static generation helper
+// Static generation for dynamic routes
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((file) => ({
@@ -14,9 +14,10 @@ export async function generateStaticParams() {
     }));
 }
 
-// Page component with correct typing
-export default async function Page({ params }: { params: { slug: string } }) {
-    const filePath = path.join('blog-posts', `${params.slug}.md`);
+// ✅ Do NOT type the `params` inline; let Next.js infer them
+export default async function Page(props: { params: { slug: string } }) {
+    const { slug } = props.params;
+    const filePath = path.join('blog-posts', `${slug}.md`);
 
     if (!fs.existsSync(filePath)) {
         notFound();
