@@ -3,8 +3,10 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { notFound } from 'next/navigation';
+import React from 'react';
 
-type PageProps = {
+type Props = {
     params: {
         slug: string;
     };
@@ -17,8 +19,14 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function Page({ params }: PageProps): Promise<JSX.Element> {
+// ✅ Page function with simplified type
+export default async function Page({ params }: Props) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
+
+    if (!fs.existsSync(filePath)) {
+        return notFound();
+    }
+
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
     const processedContent = await remark().use(html).process(content);
