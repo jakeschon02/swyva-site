@@ -3,9 +3,12 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { Metadata } from 'next';
 
-// ✅ generateStaticParams to enable static generation
+type Props = {
+    params: { slug: string };
+};
+
+// ✅ For static site generation (SSG)
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
     return files.map((filename) => ({
@@ -13,26 +16,8 @@ export async function generateStaticParams() {
     }));
 }
 
-// ✅ Type-safe props for blog post route
-interface BlogPostProps {
-    params: {
-        slug: string;
-    };
-}
-
-// ✅ Optional SEO metadata
-export async function generateMetadata({ params }: BlogPostProps): Promise<Metadata> {
-    const filePath = path.join('blog-posts', `${params.slug}.md`);
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
-    return {
-        title: data.title || 'Blog Post',
-        description: data.description || '',
-    };
-}
-
-// ✅ Main component
-export default async function BlogPostPage({ params }: BlogPostProps) {
+// ✅ The page component (must return a Promise and be typed correctly)
+export default async function Page({ params }: Props) {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
