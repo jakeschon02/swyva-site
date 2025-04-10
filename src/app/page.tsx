@@ -1,133 +1,87 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import "./globals.css"; // Assuming globals.css is in src/app/
 
 export default function Home() {
   return (
-      <main className="min-h-screen bg-white text-gray-900">
+      <main className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans">
         {/* Hero Section */}
-        <section className="text-center py-20 px-6">
-          <h2 className="text-4xl font-extrabold mb-4">
-            Build Your Digital Future with Swyva
-          </h2>
-          <p className="text-lg mb-6">
-            We provide professional web design and development services to help businesses or individuals grow online.
+        <section className="max-w-6xl mx-auto px-6 py-24 text-center">
+          <h1 className="text-5xl font-bold leading-tight mb-6">
+            Empowering <span className="text-[#3B82F6]">Modern Brands</span><br />
+            with Smart Design
+          </h1>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
+            From pixel-perfect websites to impactful digital strategies, we bring your vision to life through clean, modern, and conversion-focused design.
           </p>
-          <Link
-              href="#services"
-              className="inline-block bg-blue-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-600 transition"
-          >
-            Explore Our Services
-          </Link>
+          <button className="bg-[#3B82F6] hover:bg-[#2563EB] text-white py-3 px-6 rounded-full font-medium transition">
+            Let’s Build Together
+          </button>
         </section>
 
         {/* Services Section */}
-        <section id="services" className="bg-gray-50 py-16 px-6">
-          <h3 className="text-3xl font-bold text-center mb-12">Our Services</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <div className="text-4xl mb-4 text-blue-500">🎨</div>
-              <h4 className="text-xl font-semibold mb-2">Web Design</h4>
-              <p className="text-gray-600">Crafting visually appealing and user-friendly websites tailored to your brand.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <div className="text-4xl mb-4 text-blue-500">🧱</div>
-              <h4 className="text-xl font-semibold mb-2">Website Development</h4>
-              <p className="text-gray-600">Building robust, scalable websites with modern technologies.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-              <div className="text-4xl mb-4 text-blue-500">🚀</div>
-              <h4 className="text-xl font-semibold mb-2">Digital Strategy</h4>
-              <p className="text-gray-600">Developing effective online strategies to grow your business.</p>
+        <section className="bg-white py-20">
+          <div className="max-w-6xl mx-auto px-6">
+            <h2 className="text-3xl font-semibold text-center mb-16">Our Expertise</h2>
+            <div className="grid md:grid-cols-3 gap-10">
+              <div className="bg-[#F1F5F9] p-6 rounded-lg shadow-sm text-center">
+                <h3 className="text-xl font-bold mb-2">Brand Identity</h3>
+                <p className="text-slate-600">
+                  Crafting unique logos, color systems, and visual languages for brands that want to stand out.
+                </p>
+              </div>
+              <div className="bg-[#F1F5F9] p-6 rounded-lg shadow-sm text-center">
+                <h3 className="text-xl font-bold mb-2">Web Design</h3>
+                <p className="text-slate-600">
+                  Responsive, intuitive, and beautiful design systems built for real users.
+                </p>
+              </div>
+              <div className="bg-[#F1F5F9] p-6 rounded-lg shadow-sm text-center">
+                <h3 className="text-xl font-bold mb-2">Development</h3>
+                <p className="text-slate-600">
+                  Clean, fast, and scalable sites built using modern frameworks like Next.js & Tailwind.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Portfolio Section */}
-        <section id="portfolio" className="py-16 px-6">
-          <h3 className="text-3xl font-bold text-center mb-12">Featured Work</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Link href="/portfolio/project-one">
-              <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-xl transition group cursor-pointer">
-                <img
-                    src="/project1.png"
-                    alt="Business Website"
-                    className="w-full h-48 object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="p-4">
-                  <h4 className="font-semibold text-lg mb-1">Project One</h4>
-                  <p className="text-sm text-gray-600">Landing page for a fintech startup.</p>
-                </div>
-              </div>
-            </Link>
-            <Link href="/portfolio/project-two">
-              <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-xl transition group cursor-pointer">
-                <img
-                    src="/project2.png"
-                    alt="E-commerce Website"
-                    className="w-full h-48 object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="p-4">
-                  <h4 className="font-semibold text-lg mb-1">Project Two</h4>
-                  <p className="text-sm text-gray-600">E-commerce design with clean product UI.</p>
-                </div>
-              </div>
-            </Link>
-            <Link href="/portfolio/project-three">
-              <div className="bg-white rounded-lg overflow-hidden shadow hover:shadow-xl transition group cursor-pointer">
-                <img
-                    src="/project3.png"
-                    alt="Blog Website"
-                    className="w-full h-48 object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="p-4">
-                  <h4 className="font-semibold text-lg mb-1">Project Three</h4>
-                  <p className="text-sm text-gray-600">Modern blog design with SEO focus.</p>
-                </div>
-              </div>
-            </Link>
+        {/* Projects Section */}
+        <section className="py-20 bg-[#F8FAFC]">
+          <div className="max-w-6xl mx-auto px-6">
+            <h2 className="text-3xl font-semibold text-center mb-16">Recent Projects</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-[#DBEAFE] h-64 rounded-xl shadow-md"></div>
+              <div className="bg-[#DBEAFE] h-64 rounded-xl shadow-md"></div>
+              <div className="bg-[#DBEAFE] h-64 rounded-xl shadow-md"></div>
+            </div>
           </div>
         </section>
 
-        {/* Pricing Section */}
-        <section id="pricing" className="py-20 px-6 bg-gray-100">
-          <h3 className="text-4xl font-bold text-center mb-12">Our Pricing</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-
-            <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
-              <h4 className="text-2xl font-semibold mb-4">Basic Website Package</h4>
-              <ul className="space-y-3 text-gray-700">
-                <li>🖥️ Landing Page (1 page): <span className="font-medium">€250 – €400</span></li>
-                <li>📄 Additional Page: <span className="font-medium">€50 – €100</span> per page</li>
-                <li>🎨 Custom Design: <span className="font-medium">€100 – €200</span></li>
-                <li>🔍 Basic SEO & 2 Revisions: <span className="font-medium">Included</span></li>
-              </ul>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-green-500">
-              <h4 className="text-2xl font-semibold mb-4">Add-Ons & Features</h4>
-              <ul className="space-y-3 text-gray-700">
-                <li>📝 CMS Integration (WordPress): <span className="font-medium">€150 – €300</span></li>
-                <li>🛒 E-commerce Setup: <span className="font-medium">€300 – €600</span></li>
-                <li>📧 Newsletter Setup: <span className="font-medium">€50 – €100</span></li>
-                <li>📆 Booking Plugin: <span className="font-medium">€100 – €200</span></li>
-                <li>🌍 Multi-language Support: <span className="font-medium">€100 – €200</span></li>
-                <li>⚙️ Hosting Setup: <span className="font-medium">€50 – €100</span></li>
-                <li>⚡ Speed Optimization: <span className="font-medium">€80 – €150</span></li>
-              </ul>
-            </div>
-
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-                href="/calculator"
-                className="inline-block bg-blue-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-600 transition"
-            >
-              Try Our Price Calculator
-            </Link>
+        {/* Contact Section */}
+        <section className="bg-[#0F172A] text-white py-20">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <h2 className="text-3xl font-semibold mb-4">Let’s Connect</h2>
+            <p className="text-slate-300 mb-6">
+              Have a project in mind or want to collaborate? Reach out and let’s create something amazing together.
+            </p>
+            <button className="bg-white text-[#0F172A] px-6 py-3 rounded-full font-semibold hover:bg-slate-100 transition">
+              Contact Us
+            </button>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="bg-white py-8 border-t border-slate-200">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 gap-4 md:gap-0">
+            <span>&copy; 2025 Swyva. All rights reserved.</span>
+            <div className="space-x-4">
+              <a href="#">Twitter</a>
+              <a href="#">Dribbble</a>
+              <a href="#">LinkedIn</a>
+            </div>
+          </div>
+        </footer>
       </main>
   );
 }
