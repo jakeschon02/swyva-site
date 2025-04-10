@@ -4,26 +4,23 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-interface PageProps {
+type PageProps = {
     params: {
         slug: string;
     };
-}
+};
 
-// ✅ For static site generation (SSG)
 export async function generateStaticParams() {
     const files = fs.readdirSync('blog-posts');
-    return files.map((filename) => ({
-        slug: filename.replace(/\.md$/, ''),
+    return files.map((file) => ({
+        slug: file.replace(/\.md$/, ''),
     }));
 }
 
-// ✅ The page component
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: PageProps): Promise<JSX.Element> {
     const filePath = path.join('blog-posts', `${params.slug}.md`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContents);
-
     const processedContent = await remark().use(html).process(content);
     const contentHtml = processedContent.toString();
 
